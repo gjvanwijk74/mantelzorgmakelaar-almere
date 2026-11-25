@@ -1,0 +1,17 @@
+{
+  "name": "mantelzorgmakelaar-almere",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "astro dev",
+    "build": "astro build",
+    "deploy": "astro build && wrangler deploy"
+  },
+  "dependencies": {
+    "astro": "^7.4.13",
+    "@astrojs/sitemap": "^3.7.6"
+  },
+  "devDependencies": {
+    "wrangler": "^4.168.0"
+  }
+}
