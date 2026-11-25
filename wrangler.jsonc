@@ -9,7 +9,10 @@
     "run_worker_first": true,
     "not_found_handling": "404-page"
   },
-  // Custom domains are added once both zones are active in Cloudflare.
+  "routes": [
+    { "pattern": "mantelzorgmakelaar-almere.nl", "custom_domain": true },
+    { "pattern": "www.mantelzorgmakelaar-almere.nl", "custom_domain": true }
+  ],
   "send_email": [{ "name": "EMAIL" }],
   "vars": {
     "CANONICAL_HOST": "mantelzorgmakelaar-almere.nl",
