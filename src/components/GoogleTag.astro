@@ -1,0 +1,33 @@
+---
+// Google tag (GTM-5SXJ55WN), consent-gated.
+// gtm.js is only requested after the visitor accepts analytics cookies in the
+// cookie bar (src/components/CookieBar.astro). The choice is stored in
+// localStorage under 'mza-cookiekeuze' and is valid for 12 months.
+// Advertising signals stay denied at all times.
+---
+<script is:inline>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('consent', 'default', {
+    ad_storage: 'denied',
+    ad_user_data: 'denied',
+    ad_personalization: 'denied',
+    analytics_storage: 'denied'
+  });
+  gtag('js', new Date());
+  window.mzaLoadAnalytics = function () {
+    if (window.mzaAnalyticsLoaded) return;
+    window.mzaAnalyticsLoaded = true;
+    gtag('consent', 'update', { analytics_storage: 'granted' });
+    var s = document.createElement('script');
+    s.async = true;
+    s.src = 'https://www.googletagmanager.com/gtm.js?id=GTM-5SXJ55WN';
+    document.head.appendChild(s);
+  };
+  (function () {
+    try {
+      var c = JSON.parse(localStorage.getItem('mza-cookiekeuze') || 'null');
+      if (c && c.keuze === 'akkoord' && Date.now() - c.datum < 365 * 864e5) window.mzaLoadAnalytics();
+    } catch (e) {}
+  })();
+</script>

@@ -1,16 +1,12 @@
 ---
+import GoogleTag from '../components/GoogleTag.astro';
+import CookieBar from '../components/CookieBar.astro';
 const ld = [{"@context": "https://schema.org", "@type": "ProfessionalService", "@id": "https://mantelzorgmakelaar-almere.nl/#organisatie", "name": "Mantelzorgmakelaar Almere", "url": "https://mantelzorgmakelaar-almere.nl/", "description": "Online ondersteuning voor mantelzorgers in Almere en omgeving: het regelwerk rondom zorg uit handen, via videobellen, telefoon en e-mail.", "areaServed": [{"@type": "City", "name": "Almere"}, {"@type": "AdministrativeArea", "name": "Flevoland"}], "founder": {"@type": "Person", "name": "Birgitta Naafs", "image": "https://mantelzorgmakelaar-almere.nl/birgitta-naafs.jpg"}, "knowsLanguage": "nl", "telephone": "+31641279529", "makesOffer": [{"@type": "Offer", "name": "Gratis kennismaking (20 minuten)", "price": "0", "priceCurrency": "EUR"}, {"@type": "Offer", "name": "Intake en plan van aanpak", "price": "99", "priceCurrency": "EUR"}, {"@type": "Offer", "name": "Uitvoering van het plan", "priceSpecification": {"@type": "UnitPriceSpecification", "price": "85", "priceCurrency": "EUR", "unitText": "uur"}}]}, {"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "Waarom kom je niet bij ons thuis?", "acceptedAnswer": {"@type": "Answer", "text": "Omdat het regelwerk zelf ook op afstand gebeurt: bellen, mailen, dossiers ordenen en aanvragen voorbereiden zodat je ze direct kunt indienen. Via videobellen en telefoon kunnen we efficiënt overleggen zonder dat jij vrij hoeft te nemen of reistijd betaalt. Bovendien kan de hele familie aanschuiven, waar iedereen ook woont. Lukt videobellen niet? Dan doen we het gewoon telefonisch en per e-mail."}}, {"@type": "Question", "name": "Wat gebeurt er tijdens de gratis kennismaking?", "acceptedAnswer": {"@type": "Answer", "text": "In 20 minuten bespreken we kort wat er speelt, waar je nu vastloopt en welke ondersteuning zinvol is. Je krijgt direct een eerlijk beeld van hoe ik werk en of ik iets voor je kan betekenen. Je zit nergens aan vast."}}, {"@type": "Question", "name": "Wat krijg ik precies voor de € 99?", "acceptedAnswer": {"@type": "Answer", "text": "Je krijgt een uitgebreid intakegesprek via videobellen, ik neem je bestaande brieven, indicaties en besluiten door, en je ontvangt een concreet plan van aanpak per e-mail. Daarin staat precies welke stappen nodig zijn, in welke volgorde, en wat de verwachte uren en kosten zijn."}}, {"@type": "Question", "name": "En als de uitvoering meer uren kost dan ingeschat?", "acceptedAnswer": {"@type": "Answer", "text": "Ik werk nooit zonder jouw akkoord. Dreigt een traject meer tijd te kosten dan vooraf ingeschat, bijvoorbeeld omdat een instantie aanvullende informatie vraagt, dan overleg ik dat eerst met je voordat ik extra uren maak."}}, {"@type": "Question", "name": "Wordt deze hulp vergoed door mijn zorgverzekeraar?", "acceptedAnswer": {"@type": "Answer", "text": "Meestal niet. De meeste zorgverzekeraars vergoeden alleen mantelzorgmakelaars die zijn ingeschreven bij de beroepsvereniging BMZM. Daarom werk ik met een particulier tarief dat je vooraf kent. Wil je toch een vergoeding, dan verwijs ik je graag door."}}, {"@type": "Question", "name": "Waar kan ik terecht voor gratis ondersteuning?", "acceptedAnswer": {"@type": "Answer", "text": "Voor algemene informatie en gratis ondersteuning kun je terecht bij het wijkteam van de gemeente Almere, het steunpunt mantelzorg VMCA, de onafhankelijke cliëntondersteuning of de Mantelzorglijn (030 760 60 55). Mijn dienstverlening is er voor wie het fijn vindt dat iemand het uitzoek- en regelwerk daadwerkelijk overneemt en bewaakt."}}, {"@type": "Question", "name": "Ik woon niet in Almere, maar mijn ouder wel (of andersom). Kan dat?", "acceptedAnswer": {"@type": "Answer", "text": "Ja, dat is juist een van de voordelen van online samenwerken. Omdat we via videobellen, telefoon en e-mail werken, maakt het niet uit waar jij of je ouder woont."}}]}];
 ---
 <!doctype html>
 <html lang="nl">
 <head>
-<!-- Google tag (GTM-5SXJ55WN) -->
-<script is:inline async src="https://www.googletagmanager.com/gtm.js?id=GTM-5SXJ55WN"></script>
-<script is:inline>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-</script>
+<GoogleTag />
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Mantelzorgmakelaar Almere | Regelwerk rondom zorg uit handen, online</title>
@@ -216,7 +212,7 @@ button:disabled{opacity:.6}
 <button type="submit" style="background: #6B5A8E; color: #FFFFFF; border: 0; padding: 16px 28px; border-radius: 999px; font-size: 17px; font-weight: 800; font-family: inherit">Houd me op de hoogte</button>
 <input type="text" name="website" tabindex="-1" autocomplete="off" aria-hidden="true" style="position: absolute; left: -9999px">
 </form>
-<p style="margin: 12px 0 0; font-size: 15px; color: #5E5670">Ontvang een bericht zodra de gids verschijnt.</p>
+<p style="margin: 12px 0 0; font-size: 15px; color: #5E5670">Ontvang een bericht zodra de gids verschijnt. Je e-mailadres gebruiken we alleen daarvoor. Lees de <a href="/privacyverklaring/">privacyverklaring</a>.</p>
 <p data-status style="margin: 8px 0 0; font-weight: 800" role="status"></p>
 </div>
 </div>
@@ -259,10 +255,11 @@ button:disabled{opacity:.6}
 <div style="display: flex; flex-direction: column; gap: 6px"><label for="situatie" style="font-weight: 800; font-size: 16px">Waar heb je hulp bij nodig? <span style="font-weight: 400; color: #5E5670">(mag kort)</span></label><textarea id="situatie" name="situatie" rows="3" style="padding: 14px 18px; border: 2px solid #E4DCEB; border-radius: 16px; font-size: 17px; font-family: inherit; color: #3A3150; resize: vertical"></textarea></div>
 <button type="submit" style="background: #6B5A8E; color: #FFFFFF; border: 0; padding: 16px 28px; border-radius: 999px; font-size: 17px; font-weight: 800; font-family: inherit">Vraag je gratis kennismaking aan</button>
 <input type="text" name="website" tabindex="-1" autocomplete="off" aria-hidden="true" style="position: absolute; left: -9999px">
+<p style="margin: 0; font-size: 15px; color: #5E5670">Je gegevens gebruik ik alleen om contact met je op te nemen over je aanvraag. Deel hier niet meer dan nodig is. Lees de <a href="/privacyverklaring/">privacyverklaring</a>.</p>
 <p data-status style="margin: 0; font-weight: 800" role="status"></p>
 </form>
 </div>
-<div style="max-width: 1200px; margin: 0 auto; padding: 0 32px 40px; font-size: 15px; color: #5E5670">Montana BV · Birgitta Naafs · Veerkade 88, Almere Haven · KvK-nummer volgt</div>
+<div style="max-width: 1200px; margin: 0 auto; padding: 0 32px 40px; font-size: 15px; color: #5E5670">Montana BV · Birgitta Naafs · Veerkade 88, Almere Haven · KvK-nummer volgt<br><a href="/privacyverklaring/">Privacyverklaring</a> · <a href="/cookiebeleid/">Cookiebeleid</a> · <button type="button" data-cookie-instellingen style="background: none; border: 0; padding: 0; font: inherit; color: #6B5A8E; text-decoration: underline; cursor: pointer">Cookie-instellingen</button></div>
 </footer>
 
 
@@ -294,5 +291,6 @@ for (const form of document.querySelectorAll('form[action^="/api/"]')) {
   });
 }
 </script>
+<CookieBar />
 </body>
 </html>

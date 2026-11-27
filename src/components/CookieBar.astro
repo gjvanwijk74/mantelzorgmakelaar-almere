@@ -1,0 +1,68 @@
+---
+// Cookie bar. Shown until the visitor makes a choice (valid 12 months).
+// Accept loads Google Analytics via window.mzaLoadAnalytics (GoogleTag.astro).
+// Refuse stores the choice, removes any _ga cookies and reloads if GA was
+// already running. Any element with data-cookie-instellingen reopens the bar.
+const btn = 'background: #6B5A8E; color: #FFFFFF; border: 2px solid #6B5A8E; padding: 12px 26px; border-radius: 999px; font-size: 16px; font-weight: 800; font-family: inherit; cursor: pointer; min-width: 140px';
+---
+<div id="cookiebar" role="region" aria-label="Cookiemelding" hidden style="position: fixed; left: 16px; right: 16px; bottom: 16px; z-index: 100">
+<div style="max-width: 960px; margin: 0 auto; background: #FFFFFF; color: #3A3150; border-radius: 24px; padding: 24px 28px; box-shadow: 0 16px 40px rgba(58,49,80,0.22); display: flex; flex-wrap: wrap; align-items: center; gap: 16px 24px; font-family: Nunito, system-ui, sans-serif; font-size: 16px; line-height: 1.6">
+<p style="margin: 0; flex: 1 1 420px">Mag deze website analytische cookies van Google Analytics gebruiken? Daarmee zien we hoe de site wordt bezocht, zodat we hem kunnen verbeteren. We gebruiken ze niet voor advertenties. Meer hierover lees je in ons <a href="/cookiebeleid/" style="color: #6B5A8E">cookiebeleid</a>.</p>
+<div style="display: flex; flex-wrap: wrap; gap: 12px">
+<button type="button" data-cookiekeuze="akkoord" style={btn}>Accepteren</button>
+<button type="button" data-cookiekeuze="geweigerd" style={btn}>Weigeren</button>
+</div>
+</div>
+</div>
+<script is:inline>
+(function () {
+  var KEY = 'mza-cookiekeuze';
+  var bar = document.getElementById('cookiebar');
+  if (!bar) return;
+  function lees() {
+    try {
+      var c = JSON.parse(localStorage.getItem(KEY) || 'null');
+      if (c && Date.now() - c.datum < 365 * 864e5) return c.keuze;
+    } catch (e) {}
+    return null;
+  }
+  function bewaar(keuze) {
+    try { localStorage.setItem(KEY, JSON.stringify({ keuze: keuze, datum: Date.now() })); } catch (e) {}
+  }
+  function wisAnalyticsCookies() {
+    var host = location.hostname;
+    var domeinen = ['', host, '.' + host, '.' + host.split('.').slice(-2).join('.')];
+    document.cookie.split(';').forEach(function (c) {
+      var naam = c.split('=')[0].trim();
+      if (/^_ga/.test(naam) || naam === '_gid' || naam === '_gat') {
+        domeinen.forEach(function (d) {
+          document.cookie = naam + '=; expires=Thu, 01 Jan 1970 00:00:00 GMT; path=/' + (d ? '; domain=' + d : '');
+        });
+      }
+    });
+  }
+  if (!lees()) bar.hidden = false;
+  bar.addEventListener('click', function (e) {
+    var knop = e.target.closest('[data-cookiekeuze]');
+    if (!knop) return;
+    var keuze = knop.getAttribute('data-cookiekeuze');
+    bewaar(keuze);
+    bar.hidden = true;
+    if (keuze === 'akkoord') {
+      if (window.mzaLoadAnalytics) window.mzaLoadAnalytics();
+    } else {
+      if (window.gtag) window.gtag('consent', 'update', { analytics_storage: 'denied' });
+      wisAnalyticsCookies();
+      if (window.mzaAnalyticsLoaded) location.reload();
+    }
+  });
+  document.addEventListener('click', function (e) {
+    var link = e.target.closest('[data-cookie-instellingen]');
+    if (!link) return;
+    e.preventDefault();
+    bar.hidden = false;
+    var eerste = bar.querySelector('button');
+    if (eerste) eerste.focus();
+  });
+})();
+</script>
